@@ -45,6 +45,42 @@ const contactsData = [
             },
             contacts: () => contactsData
         },
+        Mutation: {
+            addContact: (root, args) =>{
+                const newContact = {
+                    id: args.id,
+                    firstName: args.firstName,
+                    lastName: args.lastName
+                }
+                contactsData.push(newContact);
+                return newContact;
+            },
+            updateContact: (root, args) => {
+                const contact = find(contactsData, { id: args.id });
+
+                if (!contact) {
+                    throw new Error(`Couldn't find contact with id ${args.id}`);
+                }
+
+                contact.firstName = args.firstName;
+                contact.lastName = args.lastName;
+
+                return contact;
+            },
+            removeContact: (root, args) => {
+                const removedContact = find(contactsData, { id: args.id });
+
+                if (!removedContact) {
+                    throw new Error(`Couldn't find contact with id ${args.id}`);
+                }
+
+                remove(contactsData, contact => {
+                    return contact.id === args.id
+                });
+
+                return removedContact;
+            }
+        }
     }
 
 export { typeDefs, resolvers };
