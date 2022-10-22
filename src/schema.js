@@ -31,6 +31,11 @@ const contactsData = [
         contacts: [Contact]
     }
 
+    type Mutation {
+        addContact(id: String!, firstName: String!, lastName: String!): Contact
+        updateContact(id: String!, firstName: String, lastName: String): Contact
+        removeContact(id: String!): Contact
+    }
     `
 
     const resolvers = {
