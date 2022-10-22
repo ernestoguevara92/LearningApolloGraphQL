@@ -18,3 +18,28 @@ const contactsData = [
       lastName: 'Doe'
     }
   ]
+
+  const typeDefs = gql`
+    type Contact {
+        id: String!
+        firstName: String
+        lastName: String
+    }
+
+    type Query {
+        contact(id: String!): Contact
+        contacts: [Contact]
+    }
+
+    `
+
+    const resolvers = {
+        Query: {
+            contact(parent, args, context, info) {
+                return find(contactsData, { id: args.id });
+            },
+            contacts: () => contactsData
+        },
+    }
+
+export { typeDefs, resolvers };
